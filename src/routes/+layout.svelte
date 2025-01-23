@@ -1,5 +1,10 @@
 <script>
+	import enableMocking from "$lib/mocks";
 	import "$lib/styles/index.css";
+
+	const isReady = enableMocking();
 </script>
 
-<slot />
+{#await isReady then}
+	<slot />
+{/await}

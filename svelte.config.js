@@ -10,6 +10,9 @@ const config = {
 		adapter: adapter({
 			fallback: "404.html",
 		}),
+		alias: {
+			"msw/browser": "node_modules/msw/lib/browser/index.mjs",
+		},
 		paths: {
 			base: process.argv.includes("dev") ? "" : process.env.BASE_PATH,
 		},

@@ -54,3 +54,8 @@ a.button {
 		color: var(--color-accent);
 	}
 }
+
+.flash {
+	color: var(--color-accent);
+	margin-bottom: var(--s-3);
+}

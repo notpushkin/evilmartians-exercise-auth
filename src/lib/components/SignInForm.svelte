@@ -4,6 +4,7 @@
 	const inputs: Record<string, HTMLInputElement> = {};
 	let hints: Record<keyof typeof inputs, string> = {};
 	let submitting = false;
+	let flash: string | null = null;
 
 	const handleInvalid: EventHandler<Event, HTMLFormElement> = function () {
 		hints = {};
@@ -36,14 +37,41 @@
 		}
 	};
 
-	const handleSubmit: EventHandler<SubmitEvent, HTMLFormElement> = function (
+	const handleSubmit: EventHandler<SubmitEvent, HTMLFormElement> = async function (
 		event,
 	) {
+		let resp;
 		submitting = true;
-		const data = new FormData(event.currentTarget);
-		// submit...
+
+		try {
+			resp = await fetch("/api/auth", {
+				method: "POST",
+				body: new FormData(event.currentTarget),
+			});
+		} catch(e: any) {
+			console.warn("Network error:", e)
+			flash = "Error when logging in, please try again.";
+			submitting = false;
+			return;
+		}
+
+		if (resp.ok) {
+			const { token } = await resp.json();
+			alert(`Logged in as ${token}!`);
+			// Persist token and redirect
+			// (also could use cookies perhaps)
+			return;
+		}
+
+		[{ error: flash }] = [await resp.json()];
+		submitting = false;
+		Object.values(inputs)[0].focus();
 	};
 </script>
+
+{#if flash}
+	<div class="flash">{flash}</div>
+{/if}
 
 <form
 	class="form"
