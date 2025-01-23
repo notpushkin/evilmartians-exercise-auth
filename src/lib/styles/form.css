@@ -1,0 +1,56 @@
+.form {
+	display: flex;
+	flex-direction: column;
+}
+
+.control {
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+	margin-bottom: var(--s-3);
+
+	> .control-label {
+		font-weight: 500;
+		margin-bottom: var(--s-1);
+	}
+
+	> .control-hint {
+		margin-top: var(--s-1);
+		font-size: var(--s-2);
+	}
+}
+
+.checkbox {
+	display: flex;
+	gap: var(--s-2);
+}
+
+input {
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-sm);
+	padding: var(--s-1);
+}
+
+button,
+a.button {
+	cursor: pointer;
+	position: relative;
+	padding: var(--s-1) var(--s-3);
+	text-decoration: none;
+
+	&:is([disabled], [aria-disabled="true"]) {
+		opacity: 0.5;
+		cursor: unset;
+		pointer-events: none;
+	}
+
+	&.is-primary {
+		background: var(--color-accent);
+		color: var(--color-accent-contrast);
+		border-radius: var(--radius-xs);
+	}
+
+	&.is-link {
+		color: var(--color-accent);
+	}
+}

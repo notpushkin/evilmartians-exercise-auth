@@ -1,0 +1,85 @@
+:root {
+	color-scheme: light dark;
+
+	--palette-black: #1f1f1f;
+	--palette-off-white: #bbb;
+	--palette-white: #fff;
+
+	--color-text: light-dark(var(--palette-black), var(--palette-off-white));
+	--color-title: light-dark(var(--color-text), var(--palette-white));
+	--color-background: light-dark(var(--palette-white), var(--palette-black));
+	--color-surface: light-dark(var(--color-background), #333);
+	--color-border: light-dark(var(--palette-off-white), #555);
+	--color-accent: rgb(246, 67, 67);
+	/* --color-accent-rgb: 246, 67, 67; */
+	--color-accent-contrast: var(--palette-white);
+
+	--radius-xs: .25rem;
+	--radius-sm: .375rem;
+	--radius-md: .5rem;
+
+	--s-0: .25rem;
+	--s-1: .5rem;
+	--s-2: .75rem;
+	--s-3: 1rem;
+	--s-4: 2rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+	font-family: "Inter Var", Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+	font-size: var(--s-3);
+
+	color-scheme: light dark;
+	color: var(--color-text);
+	background: var(--color-background);
+	accent-color: var(--color-accent);
+}
+
+body {
+	overscroll-behavior-y: none;
+	-webkit-tap-highlight-color: rgba(#000, 0);
+	background-color: transparent;
+
+	/* font-size: 1em; */
+	line-height: 1.2;
+}
+
+:where(input, button) {
+	margin: 0;
+
+	&:focus {
+		outline: none;
+	}
+
+	&:focus-visible {
+		box-shadow: 0 0 0 3px rgb(from var(--color-accent) r g b / .33);
+		/* box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), .33); */
+		/* outline: 3px solid rgba(var(--color-accent-rgb), .33); */
+		border-color: var(--color-accent);
+	}
+}
+
+:where(input:not([type="submit"], [type="checkbox"])) {
+	appearance: none;
+	display: inline-block;
+	font: inherit;
+	color: inherit;
+	background: none;
+}
+
+:where(button) {
+	appearance: none;
+	display: inline-block;
+	vertical-align: baseline;
+	font: inherit;
+	color: inherit;
+	background: none;
+	border: none;
+	border-radius: 0;
+}

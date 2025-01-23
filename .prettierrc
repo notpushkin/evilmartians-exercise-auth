@@ -1,0 +1,6 @@
+{
+	"editorconfig": true,
+	"singleQuote": false,
+	"quoteProps": "preserve",
+	"svelteSortOrder": "options-scripts-styles-markup"
+}

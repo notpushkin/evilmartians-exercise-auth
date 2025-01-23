@@ -1,0 +1,10 @@
+.card {
+	margin-inline: auto;
+	max-inline-size: 30rem;
+	inline-size: calc(100vw - 2rem);
+	padding: 1em;
+	margin-block-start: 1rem;
+	background: light-dark(transparent, var(--color-surface));
+	border: 1px solid light-dark(var(--color-border), transparent);
+	border-radius: var(--radius-md);
+}
