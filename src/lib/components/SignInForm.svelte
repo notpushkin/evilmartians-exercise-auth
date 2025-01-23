@@ -37,35 +37,42 @@
 		}
 	};
 
+	function revalidate(name: string) {
+		if (inputs[name].validity.valid) {
+			delete hints[name];
+			hints = hints;
+		}
+	}
+
 	const handleSubmit: EventHandler<SubmitEvent, HTMLFormElement> =
 		async function (event) {
-		let resp;
-		submitting = true;
+			let resp;
+			submitting = true;
 
-		try {
-			resp = await fetch("/api/auth", {
-				method: "POST",
-				body: new FormData(event.currentTarget),
-			});
+			try {
+				resp = await fetch("/api/auth", {
+					method: "POST",
+					body: new FormData(event.currentTarget),
+				});
 			} catch (e: any) {
 				console.warn("Network error:", e);
-			flash = "Error when logging in, please try again.";
+				flash = "Error when logging in, please try again.";
+				submitting = false;
+				return;
+			}
+
+			if (resp.ok) {
+				const { token } = await resp.json();
+				alert(`Logged in as ${token}!`);
+				// Persist token and redirect
+				// (also could use cookies perhaps)
+				return;
+			}
+
+			[{ error: flash }] = [await resp.json()];
 			submitting = false;
-			return;
-		}
-
-		if (resp.ok) {
-			const { token } = await resp.json();
-			alert(`Logged in as ${token}!`);
-			// Persist token and redirect
-			// (also could use cookies perhaps)
-			return;
-		}
-
-		[{ error: flash }] = [await resp.json()];
-		submitting = false;
-		Object.values(inputs)[0].focus();
-	};
+			Object.values(inputs)[0].focus();
+		};
 </script>
 
 {#if flash}
@@ -87,6 +94,7 @@
 			placeholder="john@example.net"
 			required
 			bind:this={inputs.email}
+			on:keyup={() => revalidate("email")}
 		/>
 		{#if hints.email}
 			<span class="control-hint">{hints.email}</span>
@@ -102,6 +110,7 @@
 			placeholder="••••••••••••"
 			required
 			bind:this={inputs.password}
+			on:keyup={() => revalidate("password")}
 		/>
 		{#if hints.password}
 			<span class="control-hint">{hints.password}</span>
@@ -115,6 +124,7 @@
 				name="pineapple"
 				required
 				bind:this={inputs.pineapple}
+				on:change={() => revalidate("pineapple")}
 			/>
 			Pineapple is delicious on pizza
 		</label>
