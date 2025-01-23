@@ -37,9 +37,8 @@
 		}
 	};
 
-	const handleSubmit: EventHandler<SubmitEvent, HTMLFormElement> = async function (
-		event,
-	) {
+	const handleSubmit: EventHandler<SubmitEvent, HTMLFormElement> =
+		async function (event) {
 		let resp;
 		submitting = true;
 
@@ -48,8 +47,8 @@
 				method: "POST",
 				body: new FormData(event.currentTarget),
 			});
-		} catch(e: any) {
-			console.warn("Network error:", e)
+			} catch (e: any) {
+				console.warn("Network error:", e);
 			flash = "Error when logging in, please try again.";
 			submitting = false;
 			return;
