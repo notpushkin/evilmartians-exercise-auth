@@ -1,18 +1,17 @@
 <script lang="ts">
 	import type { EventHandler } from "svelte/elements";
 
-	const inputs: Record<string, HTMLInputElement> = {};
-	let hints: Record<keyof typeof inputs, string> = {};
+	let hints: Record<string, string> = {};
 	let submitting = false;
 	let flash: string | null = null;
 
-	const handleInvalid: EventHandler<Event, HTMLFormElement> = function () {
+	// BUG: this is called for every element with an error, so we don’t need to loop over the elements again
+	const handleInvalid: EventHandler<Event, HTMLFormElement> = function (event) {
 		hints = {};
 		let focused = false;
 
-		for (const [name, input] of Object.entries(inputs)) {
+		for (const input of event.currentTarget.querySelectorAll("input")) {
 			if (input.validity.valid) continue;
-			// debugger;
 
 			if (
 				input.validity.valueMissing &&
@@ -26,7 +25,7 @@
 				//   } else if ...
 
 				// Or just use browser default:
-				hints[name] = input.validationMessage;
+				hints[input.name] = input.validationMessage;
 			}
 
 			// Focus the first field with an error:
@@ -37,12 +36,17 @@
 		}
 	};
 
-	function revalidate(name: string) {
-		if (inputs[name].validity.valid) {
-			delete hints[name];
+	/**
+	 * Remove validation message if event target became valid.
+	 */
+	const revalidate: EventHandler<Event, HTMLInputElement> = function ({
+		currentTarget: input,
+	}) {
+		if (input.validity.valid) {
+			delete hints[input.name];
 			hints = hints;
 		}
-	}
+	};
 
 	const handleSubmit: EventHandler<SubmitEvent, HTMLFormElement> =
 		async function (event) {
@@ -71,7 +75,7 @@
 
 			[{ error: flash }] = [await resp.json()];
 			submitting = false;
-			Object.values(inputs)[0].focus();
+			event.currentTarget.querySelector("input")!.focus();
 		};
 </script>
 
@@ -93,8 +97,7 @@
 			autocomplete="username"
 			placeholder="john@example.net"
 			required
-			bind:this={inputs.email}
-			on:keyup={() => revalidate("email")}
+			on:keyup={revalidate}
 		/>
 		{#if hints.email}
 			<span class="control-hint">{hints.email}</span>
@@ -109,8 +112,7 @@
 			autocomplete="current-password"
 			placeholder="••••••••••••"
 			required
-			bind:this={inputs.password}
-			on:keyup={() => revalidate("password")}
+			on:keyup={revalidate}
 		/>
 		{#if hints.password}
 			<span class="control-hint">{hints.password}</span>
@@ -119,13 +121,7 @@
 
 	<div class="control">
 		<label class="checkbox">
-			<input
-				type="checkbox"
-				name="pineapple"
-				required
-				bind:this={inputs.pineapple}
-				on:change={() => revalidate("pineapple")}
-			/>
+			<input type="checkbox" name="pineapple" required on:change={revalidate} />
 			Pineapple is delicious on pizza
 		</label>
 		{#if hints.pineapple}
