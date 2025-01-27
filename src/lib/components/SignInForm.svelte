@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { base } from "$app/paths";
 	import { tokenStore } from "$lib/stores/auth";
 	import type { EventHandler } from "svelte/elements";
 
@@ -70,7 +71,7 @@
 			if (resp.ok) {
 				const { token } = await resp.json();
 				tokenStore.set(token);
-				goto("/dashboard");
+				goto(`${base}/dashboard`);
 			}
 
 			[{ error: flash }] = [await resp.json()];

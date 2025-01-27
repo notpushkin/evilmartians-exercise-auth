@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { base } from "$app/paths";
 	import { tokenStore } from "$lib/stores/auth";
 
 	if (!$tokenStore) {
-		goto("/signin");
+		goto(`${base}/signin`);
 	}
 
 	function logOut() {
 		tokenStore.set(null);
-		goto("/signin");
+		goto(`${base}/signin`);
 	}
 </script>
 

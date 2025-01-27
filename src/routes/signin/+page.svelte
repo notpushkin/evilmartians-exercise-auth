@@ -1,9 +1,11 @@
 <script>
+	import { goto } from "$app/navigation";
+	import { base } from "$app/paths";
 	import SignInForm from "$lib/components/SignInForm.svelte";
 	import { tokenStore } from "$lib/stores/auth";
 
 	if ($tokenStore) {
-		goto("/dashboard");
+		goto(`${base}/dashboard`);
 	}
 </script>
 
