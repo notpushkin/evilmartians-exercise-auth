@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
+	import { tokenStore } from "$lib/stores/auth";
 	import type { EventHandler } from "svelte/elements";
 
 	let hints: Record<string, string> = {};
@@ -67,10 +69,8 @@
 
 			if (resp.ok) {
 				const { token } = await resp.json();
-				alert(`Logged in as ${token}!`);
-				// Persist token and redirect
-				// (also could use cookies perhaps)
-				return;
+				tokenStore.set(token);
+				goto("/dashboard");
 			}
 
 			[{ error: flash }] = [await resp.json()];
