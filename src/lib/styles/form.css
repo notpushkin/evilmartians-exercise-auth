@@ -51,11 +51,11 @@ a.button {
 	}
 
 	&.is-link {
-		color: var(--color-accent);
+		color: var(--color-accent-text);
 	}
 }
 
 .flash {
-	color: var(--color-accent);
+	color: var(--color-accent-text);
 	margin-bottom: var(--s-3);
 }

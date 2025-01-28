@@ -11,8 +11,8 @@
 	--color-surface: light-dark(var(--color-background), #333);
 	--color-border: light-dark(var(--palette-off-white), #555);
 	--color-accent: rgb(246, 67, 67);
-	/* --color-accent-rgb: 246, 67, 67; */
 	--color-accent-contrast: var(--palette-white);
+	--color-accent-text: light-dark(#EA0B0B, #F87272);
 
 	--radius-xs: .25rem;
 	--radius-sm: .375rem;
