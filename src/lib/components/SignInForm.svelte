@@ -90,9 +90,10 @@
 	on:invalid|capture|preventDefault={handleInvalid}
 	on:submit|preventDefault={handleSubmit}
 >
-	<label class="control is-block">
-		<span class="control-label">E-mail</span>
+	<div class="control is-block">
+		<label for="email" class="control-label">E-mail</label>
 		<input
+			id="email"
 			type="email"
 			name="email"
 			autocomplete="username"
@@ -103,11 +104,12 @@
 		{#if hints.email}
 			<span class="control-hint" role="alert" aria-atomic="true">{hints.email}</span>
 		{/if}
-	</label>
+	</div>
 
-	<label class="control is-block">
-		<span class="control-label">Password</span>
+	<div class="control is-block">
+		<label for="password" class="control-label">Password</label>
 		<input
+			id="password"
 			type="password"
 			name="password"
 			autocomplete="current-password"
@@ -118,7 +120,7 @@
 		{#if hints.password}
 			<span class="control-hint" role="alert" aria-atomic="true">{hints.password}</span>
 		{/if}
-	</label>
+	</div>
 
 	<div class="control">
 		<label class="checkbox">
