@@ -81,7 +81,7 @@
 </script>
 
 {#if flash}
-	<div class="flash">{flash}</div>
+	<div class="flash" role="alert" aria-atomic="true">{flash}</div>
 {/if}
 
 <form
@@ -101,7 +101,7 @@
 			on:keyup={revalidate}
 		/>
 		{#if hints.email}
-			<span class="control-hint">{hints.email}</span>
+			<span class="control-hint" role="alert" aria-atomic="true">{hints.email}</span>
 		{/if}
 	</label>
 
@@ -116,7 +116,7 @@
 			on:keyup={revalidate}
 		/>
 		{#if hints.password}
-			<span class="control-hint">{hints.password}</span>
+			<span class="control-hint" role="alert" aria-atomic="true">{hints.password}</span>
 		{/if}
 	</label>
 
@@ -126,7 +126,7 @@
 			Pineapple is delicious on pizza
 		</label>
 		{#if hints.pineapple}
-			<span class="control-hint">{hints.pineapple}</span>
+			<span class="control-hint" role="alert" aria-atomic="true">{hints.pineapple}</span>
 		{/if}
 	</div>
 
